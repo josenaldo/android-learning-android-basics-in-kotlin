@@ -2,6 +2,7 @@ package br.com.vudureverso.diceroller
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -28,9 +29,8 @@ class MainActivity : AppCompatActivity() {
         val diceRoll = dice.roll()
 
         // Atualiza a tela com o resultado da jogada
-        val resultTextView: TextView = findViewById(R.id.resultTextView)
-        resultTextView.text = diceRoll.toString()
-
+        val diceImage: ImageView = findViewById(R.id.imageView)
+        diceImage.setImageResource(R.drawable.dice_2)
     }
 }
 
