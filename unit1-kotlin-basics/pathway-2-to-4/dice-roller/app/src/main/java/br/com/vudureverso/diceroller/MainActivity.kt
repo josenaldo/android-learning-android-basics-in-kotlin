@@ -1,6 +1,8 @@
 package br.com.vudureverso.diceroller
 
 import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,7 +19,24 @@ class MainActivity : AppCompatActivity() {
 
         val rollButton: Button = findViewById(R.id.button)
 
-        rollButton.setOnClickListener { rollDice() }
+        rollButton.setOnClickListener {
+            val animation: Animation = AnimationUtils.loadAnimation(this, R.anim.dice_rolling);
+            animation.setAnimationListener (object : Animation.AnimationListener {
+                override fun onAnimationStart(p0: Animation?) {}
+
+                override fun onAnimationEnd(p0: Animation?) {
+                    rollDice()
+                }
+
+                override fun onAnimationRepeat(p0: Animation?) {}
+            })
+            val diceImage: ImageView = findViewById(R.id.imageView)
+            diceImage.startAnimation(animation)
+
+        }
+
+        // rolar um dado no início do programa
+        rollDice()
     }
 
     /**
@@ -30,7 +49,19 @@ class MainActivity : AppCompatActivity() {
 
         // Atualiza a tela com o resultado da jogada
         val diceImage: ImageView = findViewById(R.id.imageView)
-        diceImage.setImageResource(R.drawable.dice_2)
+
+        val drawableResource = when(diceRoll){
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
+        }
+
+        diceImage.setImageResource(drawableResource)
+        diceImage.contentDescription = diceRoll.toString()
+
     }
 }
 
